@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +12,9 @@ export class RegisterComponent {
    * we are creating a reactive form inside the register form and we created a new object for that
    */
   registerForm = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', [
+      Validators.required,
+    ]),
     email: new FormControl(''),
     age: new FormControl(''),
     password: new FormControl(''),
