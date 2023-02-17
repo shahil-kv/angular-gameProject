@@ -3,7 +3,8 @@
   [type]="type"
   class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
   [placeholder]="placeholder"
-  minlength="3"
+  [mask]="format"
+  [dropSpecialCharacters]="false"
 />
 <!-- ? control means we are having the forms and registerForms.control.name   -->
 <ng-container *ngIf="control.touched && control.dirty">
@@ -29,8 +30,7 @@
   <p *ngIf="control.errors?.email" class="text-red-400">
     You must Enter a valid email
   </p>
-
+  <p ngClass="text-red-400" *ngIf="control.errors?.min">value too low</p>
+  <p ngClass="text-red-400" *ngIf="control.errors?.max">value too high</p>
   <p>{{ control.errors | json }}</p>
 </ng-container>
-<p ngClass="text-red-400" *ngIf="control.errors?.min">value too low</p>
-<p ngClass="text-red-400" *ngIf="control.errors?.max">value too high</p>
