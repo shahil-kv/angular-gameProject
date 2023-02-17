@@ -26,15 +26,19 @@
   <!-- Password -->
   <div class="mb-3">
     <label class="inline-block mb-2">Password</label>
-    <app-input></app-input>
+    <app-input
+      [control]="password"
+      type="password"
+      placeholder="Enter password"
+    ></app-input>
   </div>
   <!-- Confirm Password -->
   <div class="mb-3">
     <label class="inline-block mb-2">Confirm Password</label>
     <app-input
-      [control]="password"
+      [control]="confirm_password"
       type="password"
-      placeholder="Enter password"
+      placeholder="Confirm password"
     ></app-input>
   </div>
   <!-- Phone Number -->
