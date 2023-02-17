@@ -1,21 +1,44 @@
-<form>
+<form #loginForm="ngForm">
   <!-- Email -->
   <div class="mb-3">
     <label class="inline-block mb-2">Email</label>
     <input
+      #email="ngModel"
       type="email"
+      name="email"
+      [(ngModel)]="credentials.email"
       class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
       placeholder="Enter Email"
+      required
+      pattern="[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
     />
+    <p
+      *ngIf="email.touched && email.dirty && email.errors"
+      class="text-red-400"
+    >
+      Email is invalid
+    </p>
+    s
   </div>
   <!-- Password -->
   <div class="mb-3">
     <label class="inline-block mb-2">Password</label>
     <input
+      name="password"
+      #password="ngModel"
       type="password"
       class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
       placeholder="Password"
+      [(ngModel)]="credentials.password"
+      required
+      pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
     />
+    <p
+      *ngIf="password.touched && password.dirty && password.errors"
+      class="text-red-400"
+    >
+      Password is invalid
+    </p>
   </div>
   <button
     type="submit"
