@@ -7,6 +7,10 @@
 />
 <!-- ? control means we are having the forms and registerForms.control.name   -->
 <ng-container *ngIf="control.touched && control.dirty">
+  <p class="text-red-400" *ngIf="control.errors?.pattern">
+    Password must be at least 8 characters long , have 1 uppercaseLetter and 1
+    lowercaseLetter
+  </p>
   <p *ngIf="control.errors?.required" class="text-red-400">
     {{ control }}
     Field is required
@@ -21,10 +25,12 @@
     {{ control.errors?.minlength.requiredLength }}
     characters long
   </p>
-  <!-- used for the control error message to show when the error show to the email then we will enter the paragraph -->
+  <!-- used for the control error message to show when the error show to the email th  /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/en we will enter the paragraph -->
   <p *ngIf="control.errors?.email" class="text-red-400">
     You must Enter a valid email
   </p>
-  <p ngClass="text-red-400" *ngIf="control.errors?.min">value too low</p>
-  <p ngClass="text-red-400" *ngIf="control.errors?.max">value too high</p>
+
+  <p>{{ control.errors | json }}</p>
 </ng-container>
+<p ngClass="text-red-400" *ngIf="control.errors?.min">value too low</p>
+<p ngClass="text-red-400" *ngIf="control.errors?.max">value too high</p>
