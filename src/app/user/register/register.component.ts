@@ -33,7 +33,11 @@ export class RegisterComponent {
     )
   ]);
   confirm_password = new FormControl('', [Validators.required]);
-  phoneNumber = new FormControl('')
+  phoneNumber = new FormControl('', [
+    Validators.minLength(12),
+    Validators.minLength(12),
+    Validators.required
+  ])
 
   registerForm = new FormGroup({
     name: this.name,
