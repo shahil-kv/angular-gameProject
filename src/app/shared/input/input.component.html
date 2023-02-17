@@ -1,0 +1,30 @@
+<input
+  [formControl]="control"
+  [type]="type"
+  class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
+  [placeholder]="placeholder"
+  minlength="3"
+/>
+<!-- ? control means we are having the forms and registerForms.control.name   -->
+<ng-container *ngIf="control.touched && control.dirty">
+  <p *ngIf="control.errors?.required" class="text-red-400">
+    {{ control }}
+    Field is required
+  </p>
+  <p
+    *ngIf="control.touched && control.dirty && control.errors?.minlength"
+    class="text-red-400"
+  >
+    The value you inputted is
+    {{ control.errors?.minlength.actualLength }}
+    characters long. It must be at least
+    {{ control.errors?.minlength.requiredLength }}
+    characters long
+  </p>
+  <!-- used for the control error message to show when the error show to the email then we will enter the paragraph -->
+  <p *ngIf="control.errors?.email" class="text-red-400">
+    You must Enter a valid email
+  </p>
+  <p ngClass="text-red-400" *ngIf="control.errors?.min">value too low</p>
+  <p ngClass="text-red-400" *ngIf="control.errors?.max">value too high</p>
+</ng-container>
