@@ -62,7 +62,7 @@ export class RegisterComponent {
   // registration forms into firebase
   /***
    * * this is the main thing in the form we are pushing data to the firebase using when the button clicks
-   * * when the button clicks then the function will triger and then the form will complete the registration
+   * * when the button clicks then the function will trieger and then the form will complete the registration
    * * it is a async function so the result we will get we want to await for the thing to work
    * **/
   async register() {
