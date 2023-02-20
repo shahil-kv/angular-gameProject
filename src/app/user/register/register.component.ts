@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +16,12 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
  */
 
 export class RegisterComponent {
+  constructor(
+    private auth: AngularFireAuth,
+    private db: AngularFirestore
+  ) { }
 
+  inSubmission = false
   name = new FormControl('', [Validators.required, Validators.minLength(3)])
   email = new FormControl('', [Validators.required, Validators.email]);
   age = new FormControl('',
@@ -52,9 +59,55 @@ export class RegisterComponent {
   alertMsg = 'Please wait ! account is being created'
   alertColor = 'blue'
 
-  register() {
+  // registration forms into firebase
+  /***
+   * * this is the main thing in the form we are pushing data to the firebase using when the button clicks
+   * * when the button clicks then the function will triger and then the form will complete the registration
+   * * it is a async function so the result we will get we want to await for the thing to work
+   * **/
+  async register() {
     this.showAlert = true
     this.alertMsg = 'Please wait ! account is being created.'
     this.alertColor = 'blue'
+    this.inSubmission = true
+    /***
+     * ? this is the destructuring of the register form to get only the values need for the database
+     * ? we only need the email and password for the database to store so we will only get these values from the
+     * */
+    const { email, password } = this.registerForm.value
+    /**
+     *  * we are checking the try and catch and await in the file so we will know when error comes
+     * * we are stopping other response to wait for this and they will return
+     **/
+    try {
+      const userCred = await this.auth.createUserWithEmailAndPassword(
+        email as string, password as string
+      )
+      /****
+       * * in this we are creating a new collection in the db and the new collection name is used
+       * * and the collection contains the document of the name,email,age,Phone number to the db named user
+       *  * in the user they will create a uuid in the users collection a new document will always be created with a uuid
+      */
+      this.db.collection('users').add(
+        {
+          name: this.name.value,
+          email: this.email.value,
+          age: this.age.value,
+          phoneNumber: this.phoneNumber.value
+        })
+      /*****
+       * * if any error comes to the code then we will have the catch if the user is not created in the backend
+       * * then alert mesg will change and then the color will change and the submission will not happen if it is error
+       **/
+    } catch (e) {
+      console.log(e)
+      this.alertMsg = "An unexpected error occurred.Please try again later"
+      this.alertColor = 'red'
+      this.inSubmission = false
+      return
+    }
+    this.alertMsg = "success ! your account created"
+    this.alertColor = 'green'
   }
+
 }
