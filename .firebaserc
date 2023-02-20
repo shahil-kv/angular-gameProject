@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "clips-7f346": {
+      "hosting": {
+        "clips": [
+          "clips-7f346"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "clips-7f346"
+  }
+}
