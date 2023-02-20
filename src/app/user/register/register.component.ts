@@ -28,7 +28,7 @@ export class RegisterComponent {
     [
       Validators.required,
       /**
-        * * The validator min age used  to sign in the website age more than 18
+        * * The validator min agee used  to sign in the website age more than 18
         * * the validator max for max age in the website
        *  */
       Validators.min(18),
