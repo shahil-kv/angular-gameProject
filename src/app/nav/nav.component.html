@@ -1,25 +1,31 @@
 <!-- Header -->
 <header id="header" class="bg-secondary">
-  <nav class="container mx-auto flex justify-start items-center py-8 px-4">
+  <nav class="container flex items-center justify-start px-4 py-8 mx-auto">
     <!-- App Name -->
-    <a class="text-3xl text-indigo-400 font-bold uppercase mr-4" href="index.html">Clips</a>
+    <a
+      class="mr-4 text-3xl font-bold text-indigo-400 uppercase"
+      href="index.html"
+      >Clips</a
+    >
 
-    <div class="flex flex-grow items-center">
+    <div class="flex items-center flex-grow">
       <!-- Primary Navigation -->
       <ul class="flex flex-row mt-1">
         <!-- Navigation Links -->
-        <li>
-          <a class="px-2" href="#" 
-            (click)="openModal($event)">
+        <!-- ? we are subscribing to the observable in the auth is authenticaed and that passes the true or false  when the users enter it is true like that-->
+        <li *ngIf="!(auth.isAuthenticated$ | async); else authLinks">
+          <a class="px-2" href="#" (click)="openModal($event)">
             Login / Register
           </a>
         </li>
-        <li>
-          <a class="px-2" href="#">Manage</a>
-        </li>
-        <li>
-          <a class="px-2" href="#">Upload</a>
-        </li>
+        <ng-template #authLinks>
+          <li>
+            <a class="px-2" href="#">Manage</a>
+          </li>
+          <li>
+            <a class="px-2" href="#">Upload</a>
+          </li>
+        </ng-template>
         <li>
           <a class="px-2" href="about.html">About</a>
         </li>
