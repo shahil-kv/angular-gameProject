@@ -2,9 +2,7 @@
 <header id="header" class="bg-secondary">
   <nav class="container flex items-center justify-start px-4 py-8 mx-auto">
     <!-- App Name -->
-    <a
-      class="mr-4 text-3xl font-bold text-indigo-400 uppercase"
-      href="index.html"
+    <a class="mr-4 text-3xl font-bold text-indigo-400 uppercase" routerLink="/"
       >Clips</a
     >
 
@@ -20,14 +18,25 @@
         </li>
         <ng-template #authLinks>
           <li>
-            <a class="px-2" href="#">Manage</a>
+            <a
+              class="px-2"
+              routerLink="/manage"
+              routerLinkActive="text-indigo-400"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Manage</a
+            >
           </li>
           <li>
-            <a class="px-2" href="#">Upload</a>
+            <a class="px-2">Upload</a>
+          </li>
+          <li>
+            <a class="px-2 cursor-pointer" (click)="logout($event)">Log Out</a>
           </li>
         </ng-template>
-        <li>
-          <a class="px-2" href="about.html">About</a>
+        <li routerLinkActive="text-indigo-400">
+          <a class="px-2" routerLink="/about" routerLinkActive="text-indigo-400"
+            >About</a
+          >
         </li>
       </ul>
     </div>
