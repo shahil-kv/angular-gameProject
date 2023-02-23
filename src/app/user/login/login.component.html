@@ -1,3 +1,7 @@
+<app-alert *ngIf="showAlert" [color]="alertColor">
+  {{ alertMesg }}
+</app-alert>
+
 <form #loginForm="ngForm" (ngSubmit)="login()">
   <!-- Email -->
   <div class="mb-3">
@@ -30,7 +34,7 @@
       placeholder="Password"
       [(ngModel)]="credentials.password"
       required
-      pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+      pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
     />
     <p
       *ngIf="password.touched && password.dirty && password.errors"
@@ -40,7 +44,7 @@
     </p>
   </div>
   <button
-    [disabled]="loginForm.invalid"
+    [disabled]="inSubmission"
     type="submit"
     class="block w-full bg-indigo-400 text-white py-1.5 px-3 rounded transition hover:bg-indigo-500 disabled:opacity-50 disabled:bg-indigo-400"
   >

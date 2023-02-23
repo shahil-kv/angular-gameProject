@@ -10,6 +10,8 @@ export class AlertComponent implements OnInit {
   @Input() color = 'blue'
 
   bgColor() {
+    console.log(this.color);
+
     return `bg-${this.color}-400`
   }
 

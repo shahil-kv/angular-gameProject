@@ -91,5 +91,4 @@ export class RegisterComponent {
     this.alertMsg = "success ! your account created"
     this.alertColor = 'green'
   }
-
 }
