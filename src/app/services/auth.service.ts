@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { Observable, of } from 'rxjs';
+import { map, filter, switchMap } from 'rxjs/operators'
 import IUser from '../models/user.model';
+import { ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ export class AuthService {
   // we need a boolean for checking if there is user or not using the auth.user.subscribe for that
   // why we are using the dollar sign in the variable isAuthenticated is because that is a observable it is a commmon pratise to make the observable variable a dollar sign to understand other developers
   public isAuthenticated$: Observable<boolean>
+  private redirect = false
 
   /****
    * ? angular fireauth is the giving the data into the google
@@ -22,7 +25,9 @@ export class AuthService {
 
   constructor(
     private auth: AngularFireAuth,
-    private db: AngularFirestore) {
+    private db: AngularFirestore,
+    private router: Router,
+    private route: ActivatedRoute) {
     // we are making the db collection a collection for the firebase and the name of the collection is user and we stored them to the userCollection
     this.usersCollection = db.collection('user')
     /*****
@@ -38,6 +43,24 @@ export class AuthService {
         return !!user
       })
     )
+    /****
+     *-------------Goal is when we click the logout and if we needs authentication in that then logout to the homepage otherwise stay in that page
+     * we are adding the data in the routing part of the url manage so we will get the data through it
+     *Through out the life time of our application The router emits the event whenever the user navigates around the app
+     * Events can be emitted by the user's actions or when we force them to navigate During these events we can access information about the current route
+     * The router will give all the information about the current route
+     * we are using the filter method to filter out our data coming from the outside we need to change the data into returning boolean so that
+     * if the webpage need authentication then it will shows us true otherwise false
+     * we are getting using the switchmap have a observable inside the observable so we used switchMap
+     */
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd),
+      map(e => this.route.firstChild),
+      switchMap(route => route?.data ?? of({}))
+    )
+      .subscribe((data) => {
+        this.redirect = data.authOnly ?? false
+      })
   }
 
   public async createUser(userData: IUser) {
@@ -68,6 +91,21 @@ export class AuthService {
     await userCred.user.updateProfile({
       displayName: userData.name
     })
+  }
+  public async logout($event?: Event) {
+
+    if (confirm('Are you sure want to logout')) {
+      if ($event) {
+        $event.preventDefault()
+      }
+      await this.auth.signOut()
+      if (this.redirect) {
+
+        await this.router.navigateByUrl('/')
+      }
+    }
+    console.log('You clicked logout')
+
   }
 }
 

@@ -9,7 +9,7 @@ import { ManageComponent } from './video/manage/manage.component';
 const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Home' },
   { path: 'about', component: AboutComponent, title: 'about' },
-  { path: 'manage', component: ManageComponent }
+
 ];
 
 @NgModule({
