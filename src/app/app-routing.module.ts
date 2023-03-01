@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Home' },
   { path: 'about', component: AboutComponent, title: 'about' },
   { path: 'clip/:id', component: ClipComponent, title: 'clip' },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent },
+  { path: 'manage-clips', redirectTo: 'manage' }
   // we are giving any values as our need in that id and then the id is like that and the id is stored in the router module we can access the routing parameter like the id
   // how we can retrieve data from the url using the router
   // * the 2 stars in the routing is the wild card means if we have any unknown routes anything will show this component
