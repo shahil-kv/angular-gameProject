@@ -11,6 +11,7 @@ import { Router } from '@angular/router'
   providedIn: 'root'
 })
 export class AuthService {
+  // all the datas of the user storing
   private usersCollection: AngularFirestoreCollection<IUser>
   // we need a boolean for checking if there is user or not using the auth.user.subscribe for that
   // why we are using the dollar sign in the variable isAuthenticated is because that is a observable it is a commmon pratise to make the observable variable a dollar sign to understand other developers
@@ -29,6 +30,7 @@ export class AuthService {
     private router: Router,
     private route: ActivatedRoute) {
     // we are making the db collection a collection for the firebase and the name of the collection is user and we stored them to the userCollection
+    // the collection contains all the details about the user their name,email,age, and everything
     this.usersCollection = db.collection('user')
     /*****
      * when the user is logged in we can get the data of the logged user using the user.subscribe console.log
@@ -38,8 +40,10 @@ export class AuthService {
      *  * we are checking that any token is available in the website if that is true then there will be tokens
      * */
     // auth.user is checking whether is there any user available or not  in the user there are somany things in a observable we only need the boolean so we are going to make that using the pipe operator
+    //  the !! operator is used to make when the
     this.isAuthenticated$ = auth.user.pipe(
       map((user) => {
+
         return !!user
       })
     )

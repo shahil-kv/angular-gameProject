@@ -69,20 +69,19 @@ export class RegisterComponent {
     this.alertMsg = 'Please wait ! account is being created.'
     this.alertColor = 'blue'
     this.inSubmission = true
-
     /**
      * we are checking the try and catch and await in the file so we will know when error comes
      * we are stopping other response to wait for this and they will return
      **/
     try {
-
+      // we are giving our users value into the service as authService is used for that
       await this.auth.createUser(this.registerForm.value as IUser)
       /*****
        *  if any error comes to the code then we will have the catch if the user is not created in the backend
        * then alert mesg will change and then the color will change and the submission will not happen if it is error
        **/
     } catch (e) {
-      console.log(e)
+
       this.alertMsg = "An unexpected error occurred.Please try again later"
       this.alertColor = 'red'
       this.inSubmission = false
